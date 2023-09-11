@@ -11,7 +11,7 @@ on:
         required: false
         default: 'develop'
         type: string
-      branch_for_tezos:
+      branch_for_tezos_legacy:
         required: false
         default: 'develop'
         type: string
@@ -58,11 +58,9 @@ jobs:
         - name: stellar
           repo: app-stellar
           branch: ${{ inputs.branch_for_stellar }}
-          dir: .
-        - name: tezos
+        - name: tezos_legacy
           repo: app-tezos
-          branch: ${{ inputs.branch_for_tezos }}
-          dir: .
+          branch: ${{ inputs.branch_for_tezos_legacy }}
         - name: xrp
           repo: app-xrp
           branch: ${{ inputs.branch_for_xrp }}
