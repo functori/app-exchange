@@ -58,9 +58,11 @@ jobs:
         - name: stellar
           repo: app-stellar
           branch: ${{ inputs.branch_for_stellar }}
+          relative_app_directory: '.'
         - name: tezos_legacy
           repo: app-tezos
           branch: ${{ inputs.branch_for_tezos_legacy }}
+          relative_app_directory: '.'
         - name: xrp
           repo: app-xrp
           branch: ${{ inputs.branch_for_xrp }}
@@ -105,7 +107,8 @@ jobs:
     uses: LedgerHQ/ledger-app-workflows/.github/workflows/reusable_build.yml@v1
     with:
       app_repository: LedgerHQ/${{ matrix.coin.repo }}
-      app_branch_name: ${{  matrix.coin.branch }}
+      app_branch_name: ${{ matrix.coin.branch }}
+      relative_app_directory: ${{ matrix.coin.relative_app_directory }}
       flags: "COIN=${{ matrix.coin.name }} CHAIN=${{ matrix.coin.name }} DEBUG=1"
       upload_app_binaries_artifact: libraries_binaries
       upload_as_lib_artifact: ${{ matrix.coin.name }}
