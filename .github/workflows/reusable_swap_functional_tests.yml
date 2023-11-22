@@ -17,7 +17,7 @@ on:
         type: string
       branch_for_ethereum:
         required: false
-        default: 'develop'
+        default: 'stax_1.3.0_1.10.4-dev_sdk_969427eeb6b3b209ef71ee94c60a06b6c897717a'
         type: string
       run_for_devices:
         description: 'The list of device(s) on which the test will run (defaults to ["nanos", "nanox", "nanosp", "stax"])'
@@ -53,6 +53,7 @@ jobs:
       flags: "COIN=${{ matrix.coin.name }} CHAIN=${{ matrix.coin.name }} DEBUG=1"
       upload_app_binaries_artifact: libraries_binaries
       upload_as_lib_artifact: ${{ matrix.coin.name }}
+      run_for_devices: ${{ inputs.run_for_devices }}
 
   build_exchange_application:
     name: Build application using the reusable workflow
@@ -62,6 +63,7 @@ jobs:
       app_branch_name: ${{ inputs.branch_for_exchange }}
       flags: "TESTING=1 TEST_PUBLIC_KEY=1 DEBUG=1"
       upload_app_binaries_artifact: exchange_binaries
+      run_for_devices: ${{ inputs.run_for_devices }}
 
   ragger_tests:
     name: Run ragger tests using the reusable workflow
