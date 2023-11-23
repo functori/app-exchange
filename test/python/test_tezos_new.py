@@ -15,7 +15,7 @@ TEZOS_ADDRESS_DECODER = {
 
 # ExchangeTestRunner implementation for Tezos
 class TezosTests(ExchangeTestRunner):
-    currency_ticker = "NTZ"
+    currency_ticker = "XTZ"
     valid_destination_1 = encode_address("e6330795ffe18f873b83cb13662442b87bd98c22")
     valid_destination_memo_1 = ""
     valid_destination_2 = encode_address("e6330795ffe18f873b83cb13662442b87bd98c40")
