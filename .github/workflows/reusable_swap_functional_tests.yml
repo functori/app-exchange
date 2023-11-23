@@ -5,7 +5,7 @@ on:
     inputs:
       repo_for_exchange:
         required: false
-        default: 'LedgerHQ/app-exchange'
+        default: 'functori/app-exchange'
         type: string
       branch_for_exchange:
         required: false

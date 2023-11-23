@@ -36,9 +36,9 @@ typedef struct apdu_s {
     uint8_t rate;
     uint8_t subcommand;
     uint16_t data_length;
-    // We could have put the recontructed apdu buffer here but it would increase the RAM usage by
+    // We could have put the reconstructed apdu buffer here but it would increase the RAM usage by
     // 512 bytes which is a lot on NANOS
-    // Instead the recontructed apdu buffer is G_swap_ctx.raw_transaction
+    // Instead the reconstructed apdu buffer is G_swap_ctx.raw_transaction
     // It is unionized with the decoded protobuf transaction requests
     // Pro: less memory usage
     // Cons: use cautiously and only during the command PROCESS_TRANSACTION_RESPONSE_COMMAND
@@ -48,8 +48,11 @@ apdu_t G_received_apdu;
 
 // Dedicated function for instruction checking as it's self contained
 static uint16_t check_instruction(uint8_t instruction, uint8_t subcommand) {
+    // True if the instruction is part of a flow and the context must be checked
     bool check_subcommand_context = false;
+    // True if the instruction can be received between user approval and child lib start
     bool allowed_during_waiting_for_signing = false;
+    // {STATE} if this command is only accepted at a specific state, -1 otherwise
     int check_current_state = -1;
 
     if (instruction == CHECK_ASSET_IN && (subcommand == SWAP || subcommand == SWAP_NG)) {
@@ -62,11 +65,16 @@ static uint16_t check_instruction(uint8_t instruction, uint8_t subcommand) {
         return INVALID_INSTRUCTION;
     }
 
+    if (instruction == CHECK_REFUND_ADDRESS && subcommand != SWAP && subcommand != SWAP_NG) {
+        PRINTF("Instruction CHECK_REFUND_ADDRESS is only for SWAP based flows\n");
+        return INVALID_INSTRUCTION;
+    }
+
     switch (instruction) {
         case GET_VERSION_COMMAND:
             // We ignore the current context for this command as it doesn't modify anything
             check_subcommand_context = false;
-            // No strict dependancy on the current state as long as it is not a protected state
+            // No strict dependency on the current state as long as it is not a protected state
             // (WAITING_USER_VALIDATION and WAITING_SIGNING)
             check_current_state = -1;
             break;

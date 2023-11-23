@@ -11,6 +11,8 @@ typedef struct buf_s {
 
 bool parse_to_sized_buffer(uint8_t *in_buffer,
                            uint16_t in_size,
-                           uint8_t size_of_lenght_field,
+                           uint8_t size_of_length_field,
                            buf_t *out,
                            uint16_t *offset);
+
+bool pop_uint8_from_buffer(uint8_t *in_buffer, uint16_t in_size, uint8_t *out, uint16_t *offset);
