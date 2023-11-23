@@ -14,9 +14,9 @@ from ragger.bip import pack_derivation_path
 from ragger.utils import create_currency_config, RAPDU
 
 
-XTZ_CONF = create_currency_config("XTZ", "Tezos Wallet", ("XTZ", 6))
+NTZ_CONF = create_currency_config("NTZ", "Tezos Wallet", ("TZ", 6))
 
-XTZ_PACKED_DERIVATION_PATH = pack_derivation_path("m/44'/1729'/0'")
+NTZ_PACKED_DERIVATION_PATH = pack_derivation_path("m/44'/1729'/0'")
 
 HASH_SIZE = 20
 
@@ -179,14 +179,14 @@ class TezosClient:
             yield
 
     def get_public_key(self) -> RAPDU:
-        return self._exchange(INS.GET_PUBLIC_KEY, P1.FIRST, payload=XTZ_PACKED_DERIVATION_PATH)
+        return self._exchange(INS.GET_PUBLIC_KEY, P1.FIRST, payload=NTZ_PACKED_DERIVATION_PATH)
 
     def sign_message(self, ins: INS = INS.SIGN_WITH_HASH, message: bytes = b"") -> RAPDU:
 
         # todo: send the message by chunk instead of fail
         assert len(message) <= MAX_PAYLOAD_SIZE, "Message to send is too long"
 
-        first_rapdu = self._exchange(ins, P1.FIRST, XTZ_PACKED_DERIVATION_PATH)
+        first_rapdu = self._exchange(ins, P1.FIRST, NTZ_PACKED_DERIVATION_PATH)
         if first_rapdu.status != StatusCode.STATUS_OK:
             return first_rapdu
 
