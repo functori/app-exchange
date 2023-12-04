@@ -45,7 +45,7 @@ jobs:
     with:
       app_repository: ${{ matrix.coin.repo }}
       app_branch_name: ${{ matrix.coin.branch }}
-      relative_app_directory: ${{ matrix.coin.relative_app_directory }}
+      relative_app_directory: 'app'
       flags: "COIN=${{ matrix.coin.name }} CHAIN=${{ matrix.coin.name }} DEBUG=1"
       upload_app_binaries_artifact: libraries_binaries
       upload_as_lib_artifact: ${{ matrix.coin.name }}
