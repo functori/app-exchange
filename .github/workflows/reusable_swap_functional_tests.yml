@@ -30,8 +30,8 @@ on:
         type: string
 
 jobs:
-  build_sideloaded_applications:
-    name: Build sideloaded applications using the reusable workflow
+  build_sideloaded_applications_tezos:
+    name: Build sideloaded applications using the reusable workflow for tezos
     strategy:
       fail-fast: false
       matrix:
@@ -40,6 +40,23 @@ jobs:
           repo: trilitech/ledger-app-tezos-wallet
           branch: ${{ inputs.branch_for_tezos }}
           relative_app_directory: 'app'
+
+    uses: LedgerHQ/ledger-app-workflows/.github/workflows/reusable_build.yml@v1
+    with:
+      app_repository: ${{ matrix.coin.repo }}
+      app_branch_name: ${{ matrix.coin.branch }}
+      relative_app_directory: ${{ matrix.coin.relative_app_directory }}
+      flags: "COIN=${{ matrix.coin.name }} CHAIN=${{ matrix.coin.name }} DEBUG=1"
+      upload_app_binaries_artifact: libraries_binaries
+      upload_as_lib_artifact: ${{ matrix.coin.name }}
+      run_for_devices: ${{ inputs.run_for_devices }}
+
+  build_sideloaded_applications_ethereum:
+    name: Build sideloaded applications using the reusable workflow for ethereum
+    strategy:
+      fail-fast: false
+      matrix:
+        coin:
         - name: ethereum
           repo: LedgerHQ/app-ethereum
           branch: ${{ inputs.branch_for_ethereum }}
@@ -54,6 +71,16 @@ jobs:
       upload_app_binaries_artifact: libraries_binaries
       upload_as_lib_artifact: ${{ matrix.coin.name }}
       run_for_devices: ${{ inputs.run_for_devices }}
+
+  build_sideloaded_applications:
+    name: Build sideloaded applications using the reusable workflow
+    needs:
+      - build_sideloaded_applications_tezos
+      - build_sideloaded_applications_ethereum
+    runs-on: ubuntu-latest
+    steps:
+      - name: Waiting job
+        run: echo ""
 
   build_exchange_application:
     name: Build application using the reusable workflow
