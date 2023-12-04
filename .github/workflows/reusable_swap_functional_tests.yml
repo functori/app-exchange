@@ -17,7 +17,7 @@ on:
         type: string
       branch_for_ethereum:
         required: false
-        default: 'stax_1.3.0_1.10.4-dev_sdk_969427eeb6b3b209ef71ee94c60a06b6c897717a'
+        default: '93712e2928656f3bece573dac4f3fefa27e0a6c5'
         type: string
       run_for_devices:
         description: 'The list of device(s) on which the test will run (defaults to ["nanos", "nanox", "nanosp", "stax"])'
@@ -39,17 +39,14 @@ jobs:
         - name: tezos_new
           repo: trilitech/ledger-app-tezos-wallet
           branch: ${{ inputs.branch_for_tezos }}
-          relative_app_directory: 'app'
         - name: ethereum
           repo: LedgerHQ/app-ethereum
           branch: ${{ inputs.branch_for_ethereum }}
-          relative_app_directory: '.'
 
     uses: LedgerHQ/ledger-app-workflows/.github/workflows/reusable_build.yml@v1
     with:
       app_repository: ${{ matrix.coin.repo }}
       app_branch_name: ${{ matrix.coin.branch }}
-      relative_app_directory: ${{ matrix.coin.relative_app_directory }}
       flags: "COIN=${{ matrix.coin.name }} CHAIN=${{ matrix.coin.name }} DEBUG=1"
       upload_app_binaries_artifact: libraries_binaries
       upload_as_lib_artifact: ${{ matrix.coin.name }}
