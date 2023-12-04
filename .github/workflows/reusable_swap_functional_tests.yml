@@ -17,7 +17,7 @@ on:
         type: string
       branch_for_ethereum:
         required: false
-        default: 'stax_1.3.0_1.10.4-dev_sdk_969427eeb6b3b209ef71ee94c60a06b6c897717a'
+        default: '93712e2928656f3bece573dac4f3fefa27e0a6c5'
         type: string
       run_for_devices:
         description: 'The list of device(s) on which the test will run (defaults to ["nanos", "nanox", "nanosp", "stax"])'
