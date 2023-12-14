@@ -17,7 +17,7 @@ on:
         type: string
       branch_for_ethereum:
         required: false
-        default: '93712e2928656f3bece573dac4f3fefa27e0a6c5'
+        default: 'develop'
         type: string
       run_for_devices:
         description: 'The list of device(s) on which the test will run (defaults to ["nanos", "nanox", "nanosp", "stax"])'
