@@ -51,6 +51,7 @@ ethereum_nanos.elf
 ethereum_nanosp.elf
 ethereum_nanosp.elf
 ethereum_nanox.elf
+ethereum_stax.elf
 litecoin_nanos.elf
 litecoin_nanosp.elf
 litecoin_nanox.elf
@@ -63,6 +64,7 @@ tezos_legacy_nanox.elf
 tezos_new_nanos.elf
 tezos_new_nanosp.elf
 tezos_new_nanox.elf
+tezos_new_stax.elf
 xrp_nanos.elf
 xrp_nanosp.elf
 xrp_nanox.elf
